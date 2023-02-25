@@ -4,7 +4,6 @@ import com.marinara.wordlink.repository.WordlistRepository;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -13,7 +12,6 @@ import java.util.List;
 /**
  * Represents a single word in the puzzle.
  */
-@Component
 @NoArgsConstructor
 @Getter
 public class Word {
@@ -24,19 +22,22 @@ public class Word {
     private Word parentWord; // Word this connects to, may be null
     private Puzzle puzzle; // Reference to the puzzle
 
-    @Autowired
     private WordlistRepository wordlistRepository;
 
-    public Word(String value, Puzzle puzzle) {
+    public Word(String value, Puzzle puzzle, WordlistRepository wordlistRepository) {
         this.value = value;
         this.puzzle = puzzle;
+        this.wordlistRepository = wordlistRepository;
+
         this.parentWord = null;
         this.connectedWords = new ArrayList<>();
     }
 
-    public Word(String value, Word parentWord, Puzzle puzzle) {
+    public Word(String value, Word parentWord, Puzzle puzzle, WordlistRepository wordlistRepository) {
         this.value = value;
         this.puzzle = puzzle;
+        this.wordlistRepository = wordlistRepository;
+
         this.parentWord = parentWord;
         this.connectedWords = new ArrayList<>();
     }
@@ -56,13 +57,13 @@ public class Word {
                 // If we found the target, set that as the only child, then return true
                 if (newWord.equalsIgnoreCase(puzzle.getTargetWord())) {
                     connectedWords.clear();
-                    connectedWords.add(new Word(newWord, this, puzzle));
+                    connectedWords.add(new Word(newWord, this, puzzle, this.wordlistRepository));
                     return true;
                 }
 
                 // Check that this new word isn't already visited, and is a valid word
                 if (!exclude.contains(newWord) && wordlistRepository.isValidWord(newWord)) {
-                    connectedWords.add(new Word(newWord, this, puzzle));
+                    connectedWords.add(new Word(newWord, this, puzzle, this.wordlistRepository));
                 }
 
             }

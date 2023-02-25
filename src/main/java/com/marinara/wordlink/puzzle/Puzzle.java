@@ -1,5 +1,6 @@
 package com.marinara.wordlink.puzzle;
 
+import com.marinara.wordlink.repository.WordlistRepository;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,8 +21,10 @@ public class Puzzle {
     private String startingWord;
     private String targetWord;
 
+    private WordlistRepository wordlistRepository;
+
     private Word baseWord; // The start of our graph
-    private List<Word> solution; // The solution to the puzzle (if there is one)
+    private List<String> solution; // The solution to the puzzle (if there is one)
 
     /**
      * Base constructor, given starting word and target word. Generates the solution
@@ -30,11 +33,13 @@ public class Puzzle {
      * @param startingWord Starting word
      * @param targetWord Target word
      */
-    public Puzzle(String startingWord, String targetWord) {
+    public Puzzle(String startingWord, String targetWord, WordlistRepository wordlistRepository) {
         this.startingWord = startingWord;
         this.targetWord = targetWord;
 
-        baseWord = new Word(startingWord, this);
+        this.wordlistRepository = wordlistRepository;
+
+        baseWord = new Word(startingWord, this, this.wordlistRepository);
         generateSolution();
     }
 
@@ -79,11 +84,11 @@ public class Puzzle {
         Word current = targetNode;
 
         while (current != baseWord) {
-            solution.add(0, current);
+            solution.add(0, current.getValue());
             current = current.getParentWord();
         }
 
-        solution.add(baseWord);
+        solution.add(0, baseWord.getValue());
     }
 
 }
