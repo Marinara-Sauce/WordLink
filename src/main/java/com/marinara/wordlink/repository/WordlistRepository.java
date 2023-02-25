@@ -1,12 +1,12 @@
 package com.marinara.wordlink.repository;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
 import java.io.File;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Scanner;
 
 /**
@@ -35,7 +35,10 @@ public class WordlistRepository {
         Scanner wordScanner = new Scanner(wordlistFile);
 
         while (wordScanner.hasNextLine()) {
-            wordlist.add(wordScanner.nextLine().toLowerCase());
+            String word = wordScanner.nextLine().toLowerCase();
+            if (!word.contains("'")) {
+                wordlist.add(word);
+            }
         }
 
         wordScanner.close();
@@ -49,6 +52,42 @@ public class WordlistRepository {
      */
     public boolean isValidWord(String word) {
         return wordlist.contains(word.toLowerCase());
+    }
+
+    /**
+     * Gets a random word of length
+     *
+     * @param length Length to check
+     * @return Random word
+     */
+    public String getRandomWord(int length) {
+        // Iterate until we get a random word with the right length
+        while (true) {
+            int randomNumber = (int) (Math.random() * wordlist.size());
+
+            Iterator<? extends String> iterator = wordlist.iterator();
+
+            int currentIndex = 0;
+            String randomElement = null;
+            boolean hitRandomElement = false;
+
+            while (iterator.hasNext()) {
+                randomElement = iterator.next();
+                currentIndex++;
+
+                if (hitRandomElement && randomElement.length() == length) {
+                    return randomElement;
+                }
+
+                if (currentIndex == randomNumber) {
+                    if (randomElement.length() == length) {
+                        return randomElement;
+                    }
+
+                    hitRandomElement = true;
+                }
+            }
+        }
     }
 
 }

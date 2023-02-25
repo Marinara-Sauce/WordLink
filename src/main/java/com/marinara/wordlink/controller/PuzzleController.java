@@ -25,7 +25,7 @@ public class PuzzleController {
      */
     @GetMapping("")
     public ResponseEntity<List<String>> getCurrentPuzzle() {
-       return new ResponseEntity<>(puzzleService.getCurrentPuzzle().getSolution(), HttpStatus.OK);
+       return new ResponseEntity<>(puzzleService.generateNewPuzzle().getSolution(), HttpStatus.OK);
     }
 
 }
