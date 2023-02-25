@@ -1,7 +1,7 @@
-package com.marinara.wordlink.repository;
+package com.marinara.wordlink.persistence;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.io.File;
@@ -12,7 +12,7 @@ import java.util.Scanner;
  * Handles the wordlist, can be used to query if words exist. This
  * repository works off a file, only reading, never writing.
  */
-@Repository
+@Component
 public class WordlistRepository {
 
     private static HashSet<String> wordlist;
