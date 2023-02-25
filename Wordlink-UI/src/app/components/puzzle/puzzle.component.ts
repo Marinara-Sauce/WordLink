@@ -17,10 +17,18 @@ export class PuzzleComponent implements OnInit {
   startingWord: string = '';
   targetWord: string = '';
 
+  steps: string[] = [];
+
   fetchPuzzleInfo() {
     this.puzzleService.getPuzzleInfo().subscribe(puzzle => {
       this.startingWord = puzzle.startingWord;
       this.targetWord = puzzle.targetWord;
+
+      this.steps.push(this.startingWord);
     });
+  }
+
+  onSubmitWord(word: string) {
+    console.log(word);
   }
 }

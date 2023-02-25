@@ -7,17 +7,26 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { HeadingComponent } from './components/heading/heading.component';
 import { PuzzleComponent } from './components/puzzle/puzzle.component';
+import { WordComponent } from './components/word/word.component';
+import { LetterComponent } from './components/letter/letter.component';
+
+import { FormsModule }   from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeadingComponent,
-    PuzzleComponent
+    PuzzleComponent,
+    WordComponent,
+    LetterComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

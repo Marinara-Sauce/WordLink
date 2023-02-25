@@ -1,2 +1,13 @@
-<p>Starting Word: {{startingWord}}</p>
-<p>Target Word: {{targetWord}}</p>
+<div class="puzzle">
+    <h3>Starting Word</h3>
+    <div *ngFor="let step of steps">
+        <app-word word={{step}}></app-word>
+    </div>
+    <app-word word="     "></app-word>
+    <app-word word={{targetWord}}></app-word>
+    <h3>Target Word</h3>
+</div>
+<form #word="ngForm" (ngSubmit)="onSubmitWord(word.value)">
+    <input type="text" name="word" placeholder="Enter Next Word" ngModel>
+    <input type="submit" value="Submit">
+</form>
