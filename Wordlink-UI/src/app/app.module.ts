@@ -6,11 +6,13 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { HeadingComponent } from './components/heading/heading.component';
+import { PuzzleComponent } from './components/puzzle/puzzle.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeadingComponent
+    HeadingComponent,
+    PuzzleComponent
   ],
   imports: [
     BrowserModule,
