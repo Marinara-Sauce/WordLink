@@ -1,6 +1,7 @@
 package com.marinara.wordlink.controller;
 
 import com.marinara.wordlink.puzzle.Puzzle;
+import com.marinara.wordlink.puzzle.PuzzleInfo;
 import com.marinara.wordlink.service.PuzzleService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,20 @@ public class PuzzleController {
 
     private PuzzleService puzzleService;
 
+    /**
+     * Fetches and returns the starting and target words
+     *
+     * @return Start and target words
+     */
+    @GetMapping("")
+    public ResponseEntity<PuzzleInfo> getPuzzleInfo() {
+        PuzzleInfo puzzle = PuzzleInfo.builder()
+                .startingWord(puzzleService.getCurrentPuzzle().getStartingWord())
+                .targetWord(puzzleService.getCurrentPuzzle().getTargetWord())
+                .build();
+
+        return new ResponseEntity<>(puzzle, HttpStatus.OK);
+    }
     /**
      * Debug function to generate a new puzzle
      *
