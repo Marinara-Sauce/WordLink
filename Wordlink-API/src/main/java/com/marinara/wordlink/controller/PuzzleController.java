@@ -113,8 +113,11 @@ public class PuzzleController {
      * @param nextWord The proposed next word
      * @return Is the current step valid?
      */
-    @PostMapping("/validateStep")
+    @GetMapping("/validateStep")
     public ResponseEntity<String> validateStep(@RequestParam String prevWord, @RequestParam String nextWord) {
+        prevWord = prevWord.toLowerCase();
+        nextWord = nextWord.toLowerCase();
+
         if (nextWord.length() != prevWord.length()) {
             return new ResponseEntity<>("BAD_SIZE", HttpStatus.OK);
         }

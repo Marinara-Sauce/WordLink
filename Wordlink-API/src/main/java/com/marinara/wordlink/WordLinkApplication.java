@@ -13,14 +13,4 @@ public class WordLinkApplication {
         SpringApplication.run(WordLinkApplication.class, args);
     }
 
-    @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurer() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/puzzle").allowedOrigins("http://localhost:4200");
-            }
-        };
-    }
-
 }
