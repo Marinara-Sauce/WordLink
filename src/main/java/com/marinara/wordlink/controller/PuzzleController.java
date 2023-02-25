@@ -61,7 +61,27 @@ public class PuzzleController {
      */
     @PostMapping("/validate")
     public ResponseEntity<Boolean> validateSolution(@RequestBody List<String> solution) {
-        // TODO: Confirm that each step is only one letter off from each other
+
+        if (solution.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        ResponseEntity<Boolean> failedEntity = new ResponseEntity<>(false, HttpStatus.OK);
+
+        // Check that the first and last items are the start and end of the puzzle
+        if (!(solution.get(0).equalsIgnoreCase(puzzleService.getCurrentPuzzle().getStartingWord()) &&
+            solution.get(solution.size() - 1).equalsIgnoreCase(puzzleService.getCurrentPuzzle().getTargetWord()))) {
+            return failedEntity;
+        }
+
+        // Check that each word is valid and only different by one character
+        for (int i = 1 ; i < solution.size() ; i++) {
+            if (!puzzleService.getWordlistRepository().isValidWord(solution.get(i)) ||
+                    !isOneStepAway(solution.get(i), solution.get(i - 1))) {
+                return failedEntity;
+            }
+        }
+
         for (String s : solution) {
             if (!puzzleService.getWordlistRepository().isValidWord(s)) {
                 return new ResponseEntity<>(false, HttpStatus.OK);
@@ -88,19 +108,28 @@ public class PuzzleController {
             return new ResponseEntity<>("NOT_A_WORD", HttpStatus.OK);
         }
 
-        int identicalChars = 0;
-        for (int i = 0 ; i < prevWord.length() ; i++) {
-            if (prevWord.charAt(i) == nextWord.charAt(i)) {
-                identicalChars++;
-                if (identicalChars > prevWord.length() - 1) {
-                    return new ResponseEntity<>("NOT_A_VALID_STEP", HttpStatus.OK);
-                }
-            }
-        }
-        if (identicalChars == prevWord.length() - 1) {
+        if (isOneStepAway(prevWord, nextWord)) {
             return new ResponseEntity<>("VALID", HttpStatus.OK);
         }
 
         return new ResponseEntity<>("NOT_A_VALID_STEP", HttpStatus.OK);
+    }
+
+    /**
+     * Checks if two words are one letter away from each other
+     *
+     * @return true if they're one letter away
+     */
+    public boolean isOneStepAway(String a, String b) {
+        int identicalChars = 0;
+        for (int i = 0 ; i < a.length() ; i++) {
+            if (a.charAt(i) == b.charAt(i)) {
+                identicalChars++;
+                if (identicalChars > a.length() - 1) {
+                    return false;
+                }
+            }
+        }
+            return identicalChars == a.length() - 1;
     }
 }
