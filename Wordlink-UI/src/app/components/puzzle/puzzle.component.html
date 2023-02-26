@@ -1,7 +1,6 @@
 <div class="puzzle">
     <h3>Starting Word</h3>
-    <app-word word={{startingWord}}></app-word>
-    <div *ngFor="let step of steps | slice:1">
+    <div *ngFor="let step of steps">
         <app-word word={{step}} [resetFunction] = "resetToWord"></app-word>
     </div>
     <app-word *ngIf="!solved" word={{gap}}></app-word>
@@ -13,13 +12,14 @@
     <input type="submit" value="Submit">
     <p class="wordError">{{wordError}}</p>
 </form>
-<app-modal *ngIf="solved">
+<app-modal *ngIf="solvedModalOpen" [closeFunction]="closeSolvedModal">
     <div>
         <h1>You Solved the Puzzle</h1>
         <h3>Now try to find a better solution</h3>
         <div class="scores">
-            <h2>You solved it in <span>{{steps.length}}</span> steps</h2>
-            <h2>Todays best score is <span>{{bestSolve}}</span> steps</h2>
+            <h2>You solved it in <span>{{steps.length + 1}}</span> steps</h2>
+            <h2 *ngIf="steps.length + 1 <= bestSolve">You solved the puzzle in the lowest number of steps today!</h2>
+            <h2 *ngIf="steps.length + 1 > bestSolve">Todays best score is <span>{{bestSolve}}</span> steps</h2>
     
             <h4>Check back tomorrow for the best solution</h4>
         </div>

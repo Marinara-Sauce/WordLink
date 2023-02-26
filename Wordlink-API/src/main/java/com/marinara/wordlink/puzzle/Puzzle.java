@@ -41,7 +41,7 @@ public class Puzzle {
 
         this.wordlistRepository = wordlistRepository;
 
-        this.bestSolve = 0;
+        this.bestSolve = Integer.MAX_VALUE;
 
         baseWord = new Word(startingWord, this, this.wordlistRepository);
         generateSolution();

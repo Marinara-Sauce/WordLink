@@ -26,6 +26,7 @@ export class PuzzleComponent implements OnInit {
   wordError: string = '';
 
   solved: boolean = false;
+  solvedModalOpen: boolean = false;
 
   fetchPuzzleInfo() {
     this.puzzleService.getPuzzleInfo().subscribe(puzzle => {
@@ -55,6 +56,7 @@ export class PuzzleComponent implements OnInit {
           break;
         case "SOLUTION":
           this.solved = true;
+          this.solvedModalOpen = true;
           this.wordError = '';
           this.steps.push(form.value.word);
           
@@ -67,6 +69,10 @@ export class PuzzleComponent implements OnInit {
 
       form.reset();
     });
+  }
+
+  closeSolvedModal = (): void => {
+    this.solvedModalOpen = false;
   }
 
   attemptSolve(): void {
