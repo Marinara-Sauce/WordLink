@@ -1,6 +1,8 @@
-<div class="word">
-    <div class="letters" *ngFor="let c of letters">
-        <app-letter letter={{c}}></app-letter>
+<div class="wordBox">
+    <div class="word">
+        <div class="letters" *ngFor="let c of letters">
+            <app-letter letter={{c}}></app-letter>
+        </div>
     </div>
     <button *ngIf="resetFunction" (click)="onReset()">Back to here</button>
 </div>

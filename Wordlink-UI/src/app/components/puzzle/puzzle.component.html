@@ -1,17 +1,19 @@
-<div class="puzzle">
-    <h3>Starting Word</h3>
-    <div *ngFor="let step of steps">
-        <app-word word={{step}} [resetFunction] = "resetToWord"></app-word>
+<div class="puzzleContainer">
+    <div class="puzzle">
+        <h3>Starting Word</h3>
+        <div *ngFor="let step of steps">
+            <app-word word={{step}} [resetFunction] = "resetToWord"></app-word>
+        </div>
+        <app-word *ngIf="!solved" word={{gap}}></app-word>
+        <app-word word={{targetWord}}></app-word>
+        <h3>Target Word</h3>
     </div>
-    <app-word *ngIf="!solved" word={{gap}}></app-word>
-    <app-word word={{targetWord}}></app-word>
-    <h3>Target Word</h3>
+    <form #wordBox="ngForm" (ngSubmit)="onSubmitWord(wordBox)">
+        <input type="text" name="word" placeholder="Enter Next Word" ngModel>
+        <input type="submit" value="Submit">
+        <p class="wordError">{{wordError}}</p>
+    </form>
 </div>
-<form #wordBox="ngForm" (ngSubmit)="onSubmitWord(wordBox)">
-    <input type="text" name="word" placeholder="Enter Next Word" ngModel>
-    <input type="submit" value="Submit">
-    <p class="wordError">{{wordError}}</p>
-</form>
 <app-modal *ngIf="solvedModalOpen" [closeFunction]="closeSolvedModal">
     <div>
         <h1>You Solved the Puzzle</h1>

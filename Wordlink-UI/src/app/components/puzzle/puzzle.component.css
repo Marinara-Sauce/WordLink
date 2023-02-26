@@ -1,3 +1,15 @@
+.puzzleContainer {
+    width: 100%;
+    justify-content: center;
+}
+
+.puzzle {
+    width: fit-content;
+    justify-content: center;
+    align-items: center;
+
+}
+
 .wordError {
     color: red;
 }
