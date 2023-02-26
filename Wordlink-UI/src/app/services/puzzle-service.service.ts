@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 
 import PuzzleInfo from '../PuzzleInfo';
 import { httpUrl } from 'src/environments/environment';
+import { PriorPuzzleInfo } from '../components/PriorPuzzleInfo';
 
 @Injectable({
   providedIn: 'root'
@@ -32,5 +33,9 @@ export class PuzzleServiceService {
 
   attemptSolve(solution: string[]): Observable<boolean> {
     return this.http.post<boolean>(httpUrl + this.puzzleUrl + '/validate', solution);
+  }
+
+  fetchPriorSolution(): Observable<PriorPuzzleInfo> {
+    return this.http.get<PriorPuzzleInfo>(httpUrl + this.puzzleUrl + '/previous');
   }
 }

@@ -1,0 +1,9 @@
+<button (click)="viewPreviousSolution()">View Previous Solution</button>
+<app-modal *ngIf="modalOpen" [closeFunction]="onCloseModal">
+    <h1>Yesterdays Puzzle</h1>
+    <h3>The Solution to Yesterdays Puzzle:</h3>
+    <li *ngFor="let word of priorSolution.solution">
+        {{word}}
+    </li>
+    <h3>The best solve that day used <span>{{priorSolution.bestSolve}}</span> steps</h3>
+</app-modal>

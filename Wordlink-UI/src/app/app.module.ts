@@ -13,6 +13,7 @@ import { LetterComponent } from './components/letter/letter.component';
 import { FormsModule }   from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ModalComponent } from './components/popup/modal.component';
+import { PriorSolutionComponent } from './components/prior-solution/prior-solution.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { ModalComponent } from './components/popup/modal.component';
     PuzzleComponent,
     WordComponent,
     LetterComponent,
-    ModalComponent
+    ModalComponent,
+    PriorSolutionComponent
   ],
   imports: [
     BrowserModule,

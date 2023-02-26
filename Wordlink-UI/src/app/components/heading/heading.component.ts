@@ -27,5 +27,4 @@ export class HeadingComponent implements OnInit {
   hideHelp = (): void => {
     this.helpVisible = false;
   }
-
 }
