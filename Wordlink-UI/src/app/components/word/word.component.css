@@ -1,5 +1,11 @@
+.wordBox {
+    display: flex;
+    align-items: center;
+}
+
 .word {
     display: flex;
+    justify-content: center;
 }
 
 button {
