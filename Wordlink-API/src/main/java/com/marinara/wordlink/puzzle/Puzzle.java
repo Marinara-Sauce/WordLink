@@ -26,6 +26,8 @@ public class Puzzle {
     private Word baseWord; // The start of our graph
     private List<String> solution; // The solution to the puzzle (if there is one)
 
+    private int bestSolve; // The best solver of this puzzle
+
     /**
      * Base constructor, given starting word and target word. Generates the solution
      * after construction
@@ -38,6 +40,8 @@ public class Puzzle {
         this.targetWord = targetWord;
 
         this.wordlistRepository = wordlistRepository;
+
+        this.bestSolve = 0;
 
         baseWord = new Word(startingWord, this, this.wordlistRepository);
         generateSolution();

@@ -25,4 +25,12 @@ export class PuzzleServiceService {
 
     return this.http.get<string>(httpUrl + this.puzzleUrl + `/validateStep?prevWord=${prevWord}&nextWord=${nextWord}`, requestOptions);
   }
+
+  generatePuzzle(): Observable<string> {
+    return this.http.get<string>(httpUrl + this.puzzleUrl + '/generateNew');
+  }
+
+  attemptSolve(solution: string[]): Observable<boolean> {
+    return this.http.post<boolean>(httpUrl + this.puzzleUrl + '/validate', solution);
+  }
 }

@@ -15,4 +15,5 @@ import lombok.Setter;
 public class PuzzleInfo {
     private String startingWord;
     private String targetWord;
+    private int bestSolve;
 }

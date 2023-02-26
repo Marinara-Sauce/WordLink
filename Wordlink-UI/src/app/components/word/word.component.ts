@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-word',
@@ -8,6 +8,7 @@ import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 export class WordComponent implements OnInit {
 
   @Input() word: string = '';
+  @Input() resetFunction: ((word: string) => void) | undefined;
 
   letters: string[] = [];
   
@@ -19,6 +20,10 @@ export class WordComponent implements OnInit {
 
   ngOnChanges(): void {
     this.letters = Array.from(this.word);
+  }
+
+  onReset(): void {
+    this.resetFunction && this.resetFunction(this.word);
   }
 
 }

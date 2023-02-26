@@ -1,14 +1,27 @@
 <div class="puzzle">
     <h3>Starting Word</h3>
-    <div *ngFor="let step of steps">
-        <app-word word={{step}}></app-word>
+    <app-word word={{startingWord}}></app-word>
+    <div *ngFor="let step of steps | slice:1">
+        <app-word word={{step}} [resetFunction] = "resetToWord"></app-word>
     </div>
-    <app-word word="     "></app-word>
+    <app-word *ngIf="!solved" word={{gap}}></app-word>
     <app-word word={{targetWord}}></app-word>
     <h3>Target Word</h3>
 </div>
 <form #wordBox="ngForm" (ngSubmit)="onSubmitWord(wordBox)">
     <input type="text" name="word" placeholder="Enter Next Word" ngModel>
     <input type="submit" value="Submit">
+    <p class="wordError">{{wordError}}</p>
 </form>
-<p>{{wordError}}</p>
+<app-modal *ngIf="solved">
+    <div>
+        <h1>You Solved the Puzzle</h1>
+        <h3>Now try to find a better solution</h3>
+        <div class="scores">
+            <h2>You solved it in <span>{{steps.length}}</span> steps</h2>
+            <h2>Todays best score is <span>{{bestSolve}}</span> steps</h2>
+    
+            <h4>Check back tomorrow for the best solution</h4>
+        </div>
+    </div>
+</app-modal>

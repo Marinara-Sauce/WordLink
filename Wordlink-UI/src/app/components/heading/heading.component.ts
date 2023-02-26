@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { PuzzleServiceService } from 'src/app/services/puzzle-service.service';
 
 @Component({
   selector: 'app-heading',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeadingComponent implements OnInit {
 
-  constructor() { }
+  constructor(private puzzleService: PuzzleServiceService) { }
 
   ngOnInit(): void {
+  }
+
+  generateNewPuzzle(): void {
+    this.puzzleService.generatePuzzle().subscribe(() =>
+      window.location.reload());
   }
 
 }

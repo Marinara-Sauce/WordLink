@@ -27,6 +27,7 @@ public class PuzzleController {
         PuzzleInfo puzzle = PuzzleInfo.builder()
                 .startingWord(puzzleService.getCurrentPuzzle().getStartingWord())
                 .targetWord(puzzleService.getCurrentPuzzle().getTargetWord())
+                .bestSolve(puzzleService.getCurrentPuzzle().getBestSolve())
                 .build();
 
         return new ResponseEntity<>(puzzle, HttpStatus.OK);
@@ -103,6 +104,10 @@ public class PuzzleController {
             }
         }
 
+        // Check if we've beaten the high score for most solves
+        if (solution.size() < puzzleService.getCurrentPuzzle().getBestSolve())
+            puzzleService.getCurrentPuzzle().setBestSolve(solution.size());
+
         return new ResponseEntity<>(true, HttpStatus.OK);
     }
 
@@ -127,6 +132,10 @@ public class PuzzleController {
         }
 
         if (isOneStepAway(prevWord, nextWord)) {
+            if (isOneStepAway(nextWord, puzzleService.getCurrentPuzzle().getTargetWord())) {
+                return new ResponseEntity<>("SOLUTION", HttpStatus.OK);
+            }
+
             return new ResponseEntity<>("VALID", HttpStatus.OK);
         }
 
