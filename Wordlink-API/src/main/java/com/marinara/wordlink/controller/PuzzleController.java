@@ -40,7 +40,7 @@ public class PuzzleController {
      */
     @GetMapping("/generateNew")
     public ResponseEntity generateNewPuzzle() {
-        puzzleService.generateNewPuzzle();
+        puzzleService.generateNewPuzzle(false);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

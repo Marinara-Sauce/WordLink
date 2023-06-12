@@ -20,22 +20,19 @@ public class PuzzleService {
     public PuzzleService(WordlistRepository wordlistRepository) {
         this.wordlistRepository = wordlistRepository;
 
-        generateNewPuzzle();
+        generateNewPuzzle(false);
     }
 
     /**
      * Generates a new puzzle, sets the current puzzle to that puzzle
      * This code is going to be bad, will need some optimizing
-     *
-     * @return The new puzzle
      */
-    public Puzzle generateNewPuzzle() {
+    public void generateNewPuzzle(boolean useFiveLetters) {
         this.previousPuzzle = currentPuzzle;
 
         // Keep generating puzzles until we find one with a good solution
         while (true) {
-            // Pick a random length between 6 and 4
-            int wordLength = (int) (Math.random() * (6 - 4)) + 4;
+            int wordLength = useFiveLetters ? 5 : 4;
 
             String startingWord = wordlistRepository.getRandomWord(wordLength);
             String targetWord = wordlistRepository.getRandomWord(wordLength);
@@ -46,7 +43,7 @@ public class PuzzleService {
             Puzzle puzzle = new Puzzle(startingWord, targetWord, wordlistRepository);
             if (!puzzle.getSolution().isEmpty()) {
                 this.currentPuzzle = puzzle;
-                return puzzle;
+                return;
             }
         }
     }
