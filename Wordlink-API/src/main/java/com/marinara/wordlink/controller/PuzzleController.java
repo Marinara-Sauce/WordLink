@@ -1,8 +1,8 @@
 package com.marinara.wordlink.controller;
 
-import com.marinara.wordlink.puzzle.PriorPuzzleInfo;
-import com.marinara.wordlink.puzzle.Puzzle;
-import com.marinara.wordlink.puzzle.PuzzleInfo;
+import com.marinara.wordlink.model.PriorPuzzleInfo;
+import com.marinara.wordlink.model.Puzzle;
+import com.marinara.wordlink.model.PuzzleInfo;
 import com.marinara.wordlink.service.PuzzleService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -40,6 +40,7 @@ public class PuzzleController {
      */
     @GetMapping("/generateNew")
     public ResponseEntity generateNewPuzzle() {
+        System.out.println("Hello world");
         puzzleService.generateNewPuzzle(false);
         return new ResponseEntity<>(HttpStatus.OK);
     }

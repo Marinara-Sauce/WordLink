@@ -1,8 +1,10 @@
 package com.marinara.wordlink.service;
 
-import com.marinara.wordlink.puzzle.Puzzle;
-import com.marinara.wordlink.repository.WordlistRepository;
+import com.marinara.wordlink.model.Puzzle;
+import com.marinara.wordlink.persistence.PuzzleRepository;
+import com.marinara.wordlink.persistence.WordlistRepository;
 import lombok.Getter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -16,9 +18,11 @@ public class PuzzleService {
     Puzzle previousPuzzle;
 
     WordlistRepository wordlistRepository;
+    PuzzleRepository puzzleRepository;
 
-    public PuzzleService(WordlistRepository wordlistRepository) {
+    public PuzzleService(WordlistRepository wordlistRepository, PuzzleRepository puzzleRepository) {
         this.wordlistRepository = wordlistRepository;
+        this.puzzleRepository = puzzleRepository;
 
         generateNewPuzzle(false);
     }
@@ -29,6 +33,8 @@ public class PuzzleService {
      */
     public void generateNewPuzzle(boolean useFiveLetters) {
         this.previousPuzzle = currentPuzzle;
+
+        Puzzle test = puzzleRepository.getPuzzle(4);
 
         // Keep generating puzzles until we find one with a good solution
         while (true) {

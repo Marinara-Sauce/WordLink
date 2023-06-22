@@ -1,4 +1,4 @@
-package com.marinara.wordlink.puzzle;
+package com.marinara.wordlink.model;
 
 import lombok.Builder;
 import lombok.Getter;

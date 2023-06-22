@@ -1,9 +1,8 @@
-package com.marinara.wordlink.puzzle;
+package com.marinara.wordlink.model;
 
-import com.marinara.wordlink.repository.WordlistRepository;
+import com.marinara.wordlink.persistence.WordlistRepository;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.HashSet;

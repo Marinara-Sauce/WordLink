@@ -1,6 +1,6 @@
-package com.marinara.wordlink.puzzle;
+package com.marinara.wordlink.model;
 
-import com.marinara.wordlink.repository.WordlistRepository;
+import com.marinara.wordlink.persistence.WordlistRepository;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -45,6 +45,19 @@ public class Puzzle {
 
         baseWord = new Word(startingWord, this, this.wordlistRepository);
         generateSolution();
+    }
+
+    /**
+     * Same as above, but with the solution already provided
+     *
+     * @param startingWord Starting word
+     * @param targetWord Target word
+     */
+    public Puzzle(String startingWord, String targetWord, List<String> solution) {
+        this.startingWord = startingWord;
+        this.targetWord = targetWord;
+
+        this.solution = solution;
     }
 
     /**
