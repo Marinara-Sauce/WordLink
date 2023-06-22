@@ -1,4 +1,4 @@
-create table if not exists puzzles
+create table if not exists puzzle
 (
     p_id     int auto_increment
     primary key,
