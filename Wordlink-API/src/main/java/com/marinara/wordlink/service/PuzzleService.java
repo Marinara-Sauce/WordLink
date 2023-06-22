@@ -1,10 +1,10 @@
 package com.marinara.wordlink.service;
 
 import com.marinara.wordlink.model.Puzzle;
+import com.marinara.wordlink.resources.PuzzleGenerator;
 import com.marinara.wordlink.persistence.PuzzleRepository;
 import com.marinara.wordlink.persistence.WordlistRepository;
 import lombok.Getter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -34,8 +34,6 @@ public class PuzzleService {
     public void generateNewPuzzle(boolean useFiveLetters) {
         this.previousPuzzle = currentPuzzle;
 
-        Puzzle test = puzzleRepository.getPuzzle(4);
-
         // Keep generating puzzles until we find one with a good solution
         while (true) {
             int wordLength = useFiveLetters ? 5 : 4;
@@ -46,9 +44,12 @@ public class PuzzleService {
             System.out.println("Attempting to generate puzzle with length: " + wordLength);
             System.out.println("Starting Word: " + startingWord + " | Target Word: " + targetWord);
 
-            Puzzle puzzle = new Puzzle(startingWord, targetWord, wordlistRepository);
+            PuzzleGenerator puzzle = new PuzzleGenerator(startingWord, targetWord, wordlistRepository);
+
             if (!puzzle.getSolution().isEmpty()) {
-                this.currentPuzzle = puzzle;
+                this.currentPuzzle = puzzle.generateRecord();
+
+                puzzleRepository.storePuzzle(currentPuzzle);
                 return;
             }
         }

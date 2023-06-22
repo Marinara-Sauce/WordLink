@@ -18,6 +18,6 @@ create table if not exists solves
     timestamp datetime not null,
     num_steps int      null,
     constraint solves_puzzles_p_id_fk
-    foreign key (p_id) references puzzles (p_id)
+    foreign key (p_id) references puzzle (p_id)
     );
 

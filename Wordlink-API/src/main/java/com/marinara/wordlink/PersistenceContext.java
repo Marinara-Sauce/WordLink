@@ -24,7 +24,7 @@ public class PersistenceContext {
     public DSLContext dsl() throws SQLException {
         String user = "root";
         String password = "Password123";
-        String url = "jdbc:mysql://localhost:3306/wordlink?autoReconnect=true&useSSL=false";
+        String url = "jdbc:mysql://localhost:3306/wordlink?autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true";
 
         return DSL.using(DriverManager.getConnection(url, user, password), SQLDialect.MYSQL);
     }

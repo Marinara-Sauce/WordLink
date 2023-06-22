@@ -1,6 +1,7 @@
 package com.marinara.wordlink.model;
 
 import com.marinara.wordlink.persistence.WordlistRepository;
+import com.marinara.wordlink.resources.PuzzleGenerator;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -19,11 +20,11 @@ public class Word {
 
     private List<Word> connectedWords; // Words that are connected to this node for BFS
     private Word parentWord; // Word this connects to, may be null
-    private Puzzle puzzle; // Reference to the puzzle
+    private PuzzleGenerator puzzle; // Reference to the puzzle
 
     private WordlistRepository wordlistRepository;
 
-    public Word(String value, Puzzle puzzle, WordlistRepository wordlistRepository) {
+    public Word(String value, PuzzleGenerator puzzle, WordlistRepository wordlistRepository) {
         this.value = value;
         this.puzzle = puzzle;
         this.wordlistRepository = wordlistRepository;
@@ -32,7 +33,7 @@ public class Word {
         this.connectedWords = new ArrayList<>();
     }
 
-    public Word(String value, Word parentWord, Puzzle puzzle, WordlistRepository wordlistRepository) {
+    public Word(String value, Word parentWord, PuzzleGenerator puzzle, WordlistRepository wordlistRepository) {
         this.value = value;
         this.puzzle = puzzle;
         this.wordlistRepository = wordlistRepository;
