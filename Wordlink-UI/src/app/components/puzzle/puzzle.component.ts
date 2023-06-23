@@ -30,8 +30,8 @@ export class PuzzleComponent implements OnInit {
 
   fetchPuzzleInfo() {
     this.puzzleService.getPuzzleInfo().subscribe(puzzle => {
-      this.startingWord = puzzle.startingWord;
-      this.targetWord = puzzle.targetWord;
+      this.startingWord = puzzle.start;
+      this.targetWord = puzzle.target;
       this.bestSolve = puzzle.bestSolve;
 
       for (var i = 0 ; i < this.startingWord.length ; i++) {

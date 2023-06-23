@@ -1,11 +1,17 @@
 package com.marinara.wordlink.service;
 
 import com.marinara.wordlink.model.Puzzle;
+import com.marinara.wordlink.model.Solve;
+import com.marinara.wordlink.persistence.SolveRepository;
 import com.marinara.wordlink.resources.PuzzleGenerator;
 import com.marinara.wordlink.persistence.PuzzleRepository;
 import com.marinara.wordlink.persistence.WordlistRepository;
 import lombok.Getter;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * Stores and controls the current puzzle
@@ -19,10 +25,12 @@ public class PuzzleService {
 
     WordlistRepository wordlistRepository;
     PuzzleRepository puzzleRepository;
+    SolveRepository solveRepository;
 
-    public PuzzleService(WordlistRepository wordlistRepository, PuzzleRepository puzzleRepository) {
+    public PuzzleService(WordlistRepository wordlistRepository, PuzzleRepository puzzleRepository, SolveRepository solveRepository) {
         this.wordlistRepository = wordlistRepository;
         this.puzzleRepository = puzzleRepository;
+        this.solveRepository = solveRepository;
 
         generateNewPuzzle(false);
     }
@@ -53,5 +61,20 @@ public class PuzzleService {
                 return;
             }
         }
+    }
+
+    /**
+     * Stores a solution to the database, assumes the solution is correct.
+     *
+     * @param numSteps List of the words
+     */
+    public void storeSolve(int numSteps) {
+        Solve solve = Solve.builder()
+                .p_id(currentPuzzle.getP_id())
+                .numSteps(numSteps)
+                .timestamp(LocalDateTime.now())
+                .build();
+
+        solveRepository.storeSolve(solve);
     }
 }

@@ -4,6 +4,7 @@ import com.marinara.wordlink.generated.tables.records.PuzzleRecord;
 import com.marinara.wordlink.model.Puzzle;
 import lombok.AllArgsConstructor;
 import org.jooq.DSLContext;
+import org.jooq.Result;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -26,10 +27,11 @@ public class PuzzleRepository {
         return null;
     }
 
-    public void storePuzzle(com.marinara.wordlink.model.Puzzle puzzle) {
+    public void storePuzzle(Puzzle puzzle) {
         PuzzleRecord pr = new PuzzleRecord();
         pr.from(puzzle);
 
-        dsl.insertInto(PUZZLE).set(pr).execute();
+        PuzzleRecord res = dsl.insertInto(PUZZLE).set(pr).returning(PUZZLE.P_ID).fetchOne();
+        puzzle.setP_id(res.getPId());
     }
 }

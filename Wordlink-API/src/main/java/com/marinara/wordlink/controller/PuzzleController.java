@@ -95,6 +95,7 @@ public class PuzzleController {
             }
         }
 
+        puzzleService.storeSolve(solution.size());
         return new ResponseEntity<>(true, HttpStatus.OK);
     }
 

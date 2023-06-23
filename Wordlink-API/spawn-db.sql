@@ -10,14 +10,14 @@ create table if not exists puzzle
     unique (start, target)
     );
 
-create table if not exists solves
+create table if not exists solve
 (
     s_id      int auto_increment
     primary key,
     p_id      int      not null,
     timestamp datetime not null,
     num_steps int      null,
-    constraint solves_puzzles_p_id_fk
+    constraint solve_puzzles_p_id_fk
     foreign key (p_id) references puzzle (p_id)
     );
 
