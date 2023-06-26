@@ -1,8 +1,7 @@
 package com.marinara.wordlink.controller;
 
-import com.marinara.wordlink.puzzle.PriorPuzzleInfo;
-import com.marinara.wordlink.puzzle.Puzzle;
-import com.marinara.wordlink.puzzle.PuzzleInfo;
+import com.marinara.wordlink.model.Puzzle;
+import com.marinara.wordlink.utils.PuzzleUtils;
 import com.marinara.wordlink.service.PuzzleService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -24,15 +23,10 @@ public class PuzzleController {
      * @return Start and target words
      */
     @GetMapping("")
-    public ResponseEntity<PuzzleInfo> getPuzzleInfo() {
-        PuzzleInfo puzzle = PuzzleInfo.builder()
-                .startingWord(puzzleService.getCurrentPuzzle().getStartingWord())
-                .targetWord(puzzleService.getCurrentPuzzle().getTargetWord())
-                .bestSolve(puzzleService.getCurrentPuzzle().getBestSolve())
-                .build();
-
-        return new ResponseEntity<>(puzzle, HttpStatus.OK);
+    public ResponseEntity<Puzzle> getPuzzleInfo() {
+        return new ResponseEntity<>(puzzleService.getCurrentPuzzle(), HttpStatus.OK);
     }
+
     /**
      * Debug function to generate a new puzzle
      *
@@ -40,7 +34,7 @@ public class PuzzleController {
      */
     @GetMapping("/generateNew")
     public ResponseEntity generateNewPuzzle() {
-        puzzleService.generateNewPuzzle();
+        puzzleService.generateNewPuzzle(false);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -51,7 +45,9 @@ public class PuzzleController {
      */
     @GetMapping("/solution")
     public ResponseEntity<List<String>> getCurrentPuzzle() {
-       return new ResponseEntity<>(puzzleService.getCurrentPuzzle().getSolution(), HttpStatus.OK);
+        List<String> puzzleSol = PuzzleUtils.recordSolutionToList(puzzleService.getCurrentPuzzle().getSolution());
+
+       return new ResponseEntity<>(puzzleSol, HttpStatus.OK);
     }
 
     /**
@@ -60,19 +56,8 @@ public class PuzzleController {
      * @return List of the previous solution path
      */
     @GetMapping("/previous")
-    public ResponseEntity<PriorPuzzleInfo> getPreviousSolution() {
-        Puzzle prevPuzzle = puzzleService.getPreviousPuzzle();
-
-        if (prevPuzzle == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-
-        PriorPuzzleInfo priorPuzzleInfo = PriorPuzzleInfo.builder()
-                .solution(prevPuzzle.getSolution())
-                .bestSolve(prevPuzzle.getBestSolve())
-                .build();
-
-        return new ResponseEntity<>(priorPuzzleInfo, HttpStatus.OK);
+    public ResponseEntity<Puzzle> getPreviousSolution() {
+        return new ResponseEntity<>(puzzleService.getPreviousPuzzle(), HttpStatus.OK);
     }
 
     /**
@@ -91,8 +76,8 @@ public class PuzzleController {
         ResponseEntity<Boolean> failedEntity = new ResponseEntity<>(false, HttpStatus.OK);
 
         // Check that the first and last items are the start and end of the puzzle
-        if (!(solution.get(0).equalsIgnoreCase(puzzleService.getCurrentPuzzle().getStartingWord()) &&
-            solution.get(solution.size() - 1).equalsIgnoreCase(puzzleService.getCurrentPuzzle().getTargetWord()))) {
+        if (!(solution.get(0).equalsIgnoreCase(puzzleService.getCurrentPuzzle().getStart()) &&
+            solution.get(solution.size() - 1).equalsIgnoreCase(puzzleService.getCurrentPuzzle().getTarget()))) {
             return failedEntity;
         }
 
@@ -110,10 +95,7 @@ public class PuzzleController {
             }
         }
 
-        // Check if we've beaten the high score for most solves
-        if (solution.size() < puzzleService.getCurrentPuzzle().getBestSolve())
-            puzzleService.getCurrentPuzzle().setBestSolve(solution.size());
-
+        puzzleService.storeSolve(solution.size());
         return new ResponseEntity<>(true, HttpStatus.OK);
     }
 
@@ -138,7 +120,7 @@ public class PuzzleController {
         }
 
         if (isOneStepAway(prevWord, nextWord)) {
-            if (isOneStepAway(nextWord, puzzleService.getCurrentPuzzle().getTargetWord())) {
+            if (isOneStepAway(nextWord, puzzleService.getCurrentPuzzle().getTarget())) {
                 return new ResponseEntity<>("SOLUTION", HttpStatus.OK);
             }
 

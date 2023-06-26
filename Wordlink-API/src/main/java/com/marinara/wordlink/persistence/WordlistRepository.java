@@ -1,4 +1,4 @@
-package com.marinara.wordlink.repository;
+package com.marinara.wordlink.persistence;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;

@@ -1,5 +1,5 @@
 export default interface PublicInfo {
-    startingWord: string;
-    targetWord: string;
+    start: string;
+    target: string;
     bestSolve: number;
 }

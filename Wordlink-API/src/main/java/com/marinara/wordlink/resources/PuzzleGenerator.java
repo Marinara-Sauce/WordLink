@@ -1,9 +1,13 @@
-package com.marinara.wordlink.puzzle;
+package com.marinara.wordlink.resources;
 
-import com.marinara.wordlink.repository.WordlistRepository;
+import com.marinara.wordlink.model.Puzzle;
+import com.marinara.wordlink.model.Word;
+import com.marinara.wordlink.persistence.WordlistRepository;
+import com.marinara.wordlink.utils.PuzzleUtils;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -16,7 +20,7 @@ import java.util.List;
  */
 @Getter
 @Setter
-public class Puzzle {
+public class PuzzleGenerator {
 
     private String startingWord;
     private String targetWord;
@@ -35,7 +39,7 @@ public class Puzzle {
      * @param startingWord Starting word
      * @param targetWord Target word
      */
-    public Puzzle(String startingWord, String targetWord, WordlistRepository wordlistRepository) {
+    public PuzzleGenerator(String startingWord, String targetWord, WordlistRepository wordlistRepository) {
         this.startingWord = startingWord;
         this.targetWord = targetWord;
 
@@ -45,6 +49,19 @@ public class Puzzle {
 
         baseWord = new Word(startingWord, this, this.wordlistRepository);
         generateSolution();
+    }
+
+    /**
+     * Same as above, but with the solution already provided
+     *
+     * @param startingWord Starting word
+     * @param targetWord Target word
+     */
+    public PuzzleGenerator(String startingWord, String targetWord, List<String> solution) {
+        this.startingWord = startingWord;
+        this.targetWord = targetWord;
+
+        this.solution = solution;
     }
 
     /**
@@ -93,6 +110,16 @@ public class Puzzle {
         }
 
         solution.add(0, baseWord.getValue());
+    }
+
+    public Puzzle generateRecord() {
+        return Puzzle.builder()
+                .p_id(0)
+                .start(startingWord)
+                .target(targetWord)
+                .solution(PuzzleUtils.recordSolutionListToString(solution))
+                .date(LocalDate.now())
+                .build();
     }
 
 }
