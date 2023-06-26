@@ -1,8 +1,14 @@
 <div class="wordBox">
-    <div class="word">
+    <div class="enteredWord" *ngIf="resetFunction;else notEnteredWord" (click)="onReset()">
         <div class="letters" *ngFor="let c of letters">
             <app-letter letter={{c}}></app-letter>
         </div>
     </div>
-    <button *ngIf="resetFunction" (click)="onReset()">Back to here</button>
+    <ng-template #notEnteredWord>
+        <div class="word" #notEnteredWord>
+            <div class="letters" *ngFor="let c of letters">
+                <app-letter letter={{c}}></app-letter>
+            </div>
+        </div>
+    </ng-template>
 </div>

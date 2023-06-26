@@ -8,6 +8,15 @@
     justify-content: center;
 }
 
+.enteredWord {
+    display: flex;
+    justify-content: center;
+}
+
+.enteredWord:hover {
+    background-color: yellow;
+}
+
 button {
     width: fit-content;
     margin: 5px;

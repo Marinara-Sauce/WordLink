@@ -2,9 +2,11 @@
     <h1>WordLink</h1>
     
     <div class="buttons">
-        <button (click)="showHelp()">How to Play</button>
-        <button (click)="generateNewPuzzle()">Generate Puzzle</button>
-        <app-prior-solution></app-prior-solution>
+        <button class="help" (click)="showHelp()">
+            <img src="question-mark.png" />
+        </button>
+        <!-- <button (click)="generateNewPuzzle()">Generate Puzzle</button>
+        <app-prior-solution></app-prior-solution> -->
     </div>
 </div>
 
