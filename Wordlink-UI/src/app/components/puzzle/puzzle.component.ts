@@ -28,6 +28,8 @@ export class PuzzleComponent implements OnInit {
   solved: boolean = false;
   solvedModalOpen: boolean = false;
 
+  currentLetters: string = '____';
+
   fetchPuzzleInfo() {
     this.puzzleService.getPuzzleInfo().subscribe(puzzle => {
       this.startingWord = puzzle.start;
@@ -42,8 +44,8 @@ export class PuzzleComponent implements OnInit {
     });
   }
 
-  onSubmitWord(form: NgForm) {
-    this.puzzleService.validateStep(this.steps[this.steps.length - 1], form.value.word).subscribe(valid => {
+  onSubmitWord() {
+    this.puzzleService.validateStep(this.steps[this.steps.length - 1], this.currentLetters).subscribe(valid => {
       switch (valid) {
         case "BAD_SIZE":
           this.wordError = `Each word must be ${this.startingWord.length} characters long`;
@@ -52,22 +54,22 @@ export class PuzzleComponent implements OnInit {
           this.wordError = "You can only change one letter at a time";
           break;
         case "NOT_A_WORD":
-          this.wordError = `${form.value.word} is not a valid word`;
+          this.wordError = `${this.currentLetters} is not a valid word`;
           break;
         case "SOLUTION":
           this.solved = true;
           this.solvedModalOpen = true;
           this.wordError = '';
-          this.steps.push(form.value.word);
+          this.steps.push(this.currentLetters);
           
           this.attemptSolve();
           break;
         default:
           this.wordError = '';
-          this.steps.push(form.value.word);
+          this.steps.push(this.currentLetters);
       }
 
-      form.reset();
+      this.currentLetters = '____';
     });
   }
 
@@ -82,6 +84,24 @@ export class PuzzleComponent implements OnInit {
       this.steps = this.steps.slice(0, this.steps.length - 1);
       solved ? console.log('You solved the puzzle!') : console.log('Bad solution :(');
     });
+  }
+
+  onKeyEntered = (key: string): void => {
+    for (var i = 0 ; i < this.currentLetters.length ; i++) {
+      if (this.currentLetters[i] == '_') {
+        this.currentLetters = this.currentLetters.substring(0, i) + key + this.currentLetters.substring(i, this.currentLetters.length - 1);
+        break;
+      }
+    }
+  }
+
+  onBackspace = (): void => {
+    for (var i = this.currentLetters.length - 1 ; i >= 0 ; i--) {
+      if (this.currentLetters[i] != '_') {
+        this.currentLetters = this.currentLetters.substring(0, i) + '_' + this.currentLetters.substring(i + 1, this.currentLetters.length);
+        break;
+      }
+    }
   }
 
   resetToWord = (word: string): void => {
