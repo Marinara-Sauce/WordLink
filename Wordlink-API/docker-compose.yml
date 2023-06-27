@@ -28,8 +28,7 @@ services:
     expose:
       - "8080"
     depends_on:
-      db:
-        condition: service_healthy
+      - db
     restart: always
     command: "mvn clean spring-boot:run"
 volumes:
