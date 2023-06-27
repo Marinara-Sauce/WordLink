@@ -1,2 +1,2 @@
-cd ../../Wordlink-API
+cd Wordlink-API
 mvn clean install

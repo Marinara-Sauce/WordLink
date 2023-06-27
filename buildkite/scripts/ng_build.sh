@@ -1,2 +1,2 @@
-cd ../../Wordlink-UI
+cd Wordlink-UI
 ng build
