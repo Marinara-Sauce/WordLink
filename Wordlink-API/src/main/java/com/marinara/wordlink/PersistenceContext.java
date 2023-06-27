@@ -14,9 +14,13 @@ public class PersistenceContext {
 
     @Bean
     public DSLContext dsl() throws SQLException {
+        String dbLocation = System.getenv("DB_ADDR");
+
+        System.out.println("Using DB Location: " + dbLocation);
+
         String user = "root";
         String password = "Password123";
-        String url = "jdbc:mysql://localhost:3306/wordlink?autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true";
+        String url = "jdbc:mysql://" + dbLocation + ":3306/wordlink?autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true";
 
         return DSL.using(DriverManager.getConnection(url, user, password), SQLDialect.MYSQL);
     }

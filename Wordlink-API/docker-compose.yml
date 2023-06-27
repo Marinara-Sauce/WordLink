@@ -2,15 +2,35 @@ version: '3.3'
 services:
   db:
     image: mysql:latest
+    container_name: mysqldb
     environment:
       MYSQL_ROOT_PASSWORD: Password123
       MYSQL_DATABASE: wordlink
     ports:
       - '3306:3306'
-    expose:
-      - '3306'
     volumes:
       - db-data:/var/lib/mysql
       - ./spawn-db.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 5s
+      timeout: 1s
+      retries: 10
+  api:
+    image: api-image:latest
+    environment:
+      DB_ADDR: mysqldb
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysqldb:3306/wordlink?autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: Password123
+    ports:
+      - 8080:8080
+    expose:
+      - "8080"
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: always
+    command: "mvn clean spring-boot:run"
 volumes:
   db-data:
