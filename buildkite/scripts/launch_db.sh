@@ -1,1 +1,1 @@
-docker-compose -f ../../Wordlink-API/docker-compose.yml -d
+docker-compose -f ../../Wordlink-API/docker-compose.yml up -d
