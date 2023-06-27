@@ -157,7 +157,7 @@
             <properties>
                 <jdbc.user>root</jdbc.user>
                 <jdbc.password>Password123</jdbc.password>
-                <jdbc.url>jdbc:mysql://localhost:3306/wordlink?autoReconnect=true&amp;useSSL=false</jdbc.url>
+                <jdbc.url>jdbc:mysql://localhost:3306/wordlink?autoReconnect=true&amp;useSSL=false&amp;allowPublicKeyRetrieval=true</jdbc.url>
                 <jdbc.driver>com.mysql.cj.jdbc.Driver</jdbc.driver>
             </properties>
         </profile>
