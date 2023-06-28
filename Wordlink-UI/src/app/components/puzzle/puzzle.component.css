@@ -19,11 +19,13 @@
 
 .enterWord {
   width: 100%;
-  padding: 10px; /* Add padding as needed */
   box-sizing: border-box;
   text-align: center;
   flex: 0 0 auto;
-  padding: 20px;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 }
 
 h3 {
