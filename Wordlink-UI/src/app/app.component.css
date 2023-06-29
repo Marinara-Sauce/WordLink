@@ -6,6 +6,5 @@
 
 .puzzle {
     flex: 1 1 auto;
-    padding: 10px;
-    padding-top: 0px;
+    position: relative;
 }
