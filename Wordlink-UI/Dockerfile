@@ -2,7 +2,6 @@
 FROM node:latest as builder
 WORKDIR /app
 COPY package*.json ./
-COPY resources/* ./
 RUN npm install
 COPY . .
 RUN npm run build -- --prod
