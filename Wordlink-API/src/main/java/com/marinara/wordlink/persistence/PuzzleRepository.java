@@ -4,11 +4,9 @@ import com.marinara.wordlink.generated.tables.records.PuzzleRecord;
 import com.marinara.wordlink.model.Puzzle;
 import lombok.AllArgsConstructor;
 import org.jooq.DSLContext;
-import org.jooq.Result;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Optional;
 
 import static com.marinara.wordlink.generated.tables.Puzzle.PUZZLE;
@@ -41,6 +39,7 @@ public class PuzzleRepository {
                 .start(puzzleRecord.getStart())
                 .target(puzzleRecord.getTarget())
                 .solution(puzzleRecord.getSolution())
+                .p_id(puzzleRecord.getPId())
                 .build()).orElse(null);
     }
 

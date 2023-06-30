@@ -9,7 +9,9 @@ import { PriorPuzzleInfo } from '../PriorPuzzleInfo';
 })
 export class PriorSolutionComponent implements OnInit {
 
-  constructor(private puzzleService: PuzzleServiceService) { }
+  constructor(private puzzleService: PuzzleServiceService) { 
+    this.viewPreviousSolution()
+  }
 
   ngOnInit(): void {
   }
@@ -26,7 +28,6 @@ export class PriorSolutionComponent implements OnInit {
   viewPreviousSolution(): void {
     this.puzzleService.fetchPriorSolution().subscribe(sol => {
       this.priorSolution = sol;
-      this.openModal()
     });
   }
 

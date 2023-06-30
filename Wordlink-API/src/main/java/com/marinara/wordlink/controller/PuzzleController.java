@@ -1,5 +1,6 @@
 package com.marinara.wordlink.controller;
 
+import com.marinara.wordlink.model.PriorPuzzle;
 import com.marinara.wordlink.model.Puzzle;
 import com.marinara.wordlink.utils.PuzzleUtils;
 import com.marinara.wordlink.service.PuzzleService;
@@ -56,8 +57,8 @@ public class PuzzleController {
      * @return List of the previous solution path
      */
     @GetMapping("/previous")
-    public ResponseEntity<Puzzle> getPreviousSolution() {
-        return new ResponseEntity<>(puzzleService.getPreviousPuzzle(), HttpStatus.OK);
+    public ResponseEntity<PriorPuzzle> getPreviousSolution() {
+        return new ResponseEntity<>(puzzleService.getPriorStats(), HttpStatus.OK);
     }
 
     /**

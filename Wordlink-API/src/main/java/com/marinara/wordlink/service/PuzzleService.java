@@ -1,11 +1,13 @@
 package com.marinara.wordlink.service;
 
+import com.marinara.wordlink.model.PriorPuzzle;
 import com.marinara.wordlink.model.Puzzle;
 import com.marinara.wordlink.model.Solve;
 import com.marinara.wordlink.persistence.SolveRepository;
 import com.marinara.wordlink.resources.PuzzleGenerator;
 import com.marinara.wordlink.persistence.PuzzleRepository;
 import com.marinara.wordlink.persistence.WordlistRepository;
+import com.marinara.wordlink.utils.PuzzleUtils;
 import lombok.Getter;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,7 @@ public class PuzzleService {
 
     Puzzle currentPuzzle;
     Puzzle previousPuzzle;
+    PriorPuzzle priorStats;
 
     WordlistRepository wordlistRepository;
     PuzzleRepository puzzleRepository;
@@ -40,8 +43,7 @@ public class PuzzleService {
         else
             currentPuzzle = today;
 
-        // Get yesterdays puzzle
-        previousPuzzle = puzzleRepository.getPuzzleOnDay(LocalDate.now().minusDays(1));
+        fetchPreviousPuzzle();
     }
 
     /**
@@ -70,6 +72,15 @@ public class PuzzleService {
                 puzzleRepository.storePuzzle(currentPuzzle);
                 return;
             }
+        }
+    }
+
+    @Scheduled(cron = "30 0 0 * * ?")
+    public void fetchPreviousPuzzle() {
+        previousPuzzle = puzzleRepository.getPuzzleOnDay(LocalDate.now().minusDays(1));
+        if (previousPuzzle != null) {
+            priorStats = solveRepository.getStatsForPuzzle(previousPuzzle.getP_id());
+            priorStats.setSolution(PuzzleUtils.recordSolutionToList(previousPuzzle.getSolution()));
         }
     }
 
