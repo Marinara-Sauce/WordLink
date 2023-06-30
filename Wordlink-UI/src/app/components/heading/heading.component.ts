@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { PuzzleServiceService } from 'src/app/services/puzzle-service.service';
 
 @Component({
@@ -12,6 +12,8 @@ export class HeadingComponent implements OnInit {
 
   helpVisible: boolean = false;
 
+  @Output() showHelpEmitter = new EventEmitter<string>();
+
   ngOnInit(): void {
   }
 
@@ -21,7 +23,7 @@ export class HeadingComponent implements OnInit {
   }
 
   showHelp(): void {
-    this.helpVisible = true;
+    this.showHelpEmitter.emit();
   }
 
   hideHelp = (): void => {

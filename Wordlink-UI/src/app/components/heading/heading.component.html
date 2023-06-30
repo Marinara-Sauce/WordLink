@@ -9,16 +9,3 @@
         <app-prior-solution></app-prior-solution> -->
     </div>
 </div>
-
-<app-modal *ngIf="helpVisible" [closeFunction]="hideHelp">
-    <h1>WordLink</h1>
-    <p>Try to get from the starting word to the target word in as little number of steps as possible. To make a step,
-        change one letter in the previous word to create a new word, with that word being a valid word. Do this until
-        you get to the target word.
-
-        At any time you can click the "Go Back to Here" button next to a word to reset the puzzle back to that step.
-
-        There are many ways to solve these. Compete with your friends to see who can get the lowest number of steps.
-        Check back tomorrow for a new puzzle and to see the best possible solution for the previous puzzle.
-    </p>
-</app-modal>

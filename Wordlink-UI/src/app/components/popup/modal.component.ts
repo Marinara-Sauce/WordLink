@@ -8,6 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class ModalComponent implements OnInit {
 
   @Input() closeFunction!: () => void;
+  @Input() heading: string = '';
 
   constructor() { }
 
