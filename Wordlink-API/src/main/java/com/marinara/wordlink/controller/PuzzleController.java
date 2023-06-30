@@ -34,7 +34,7 @@ public class PuzzleController {
      */
     @GetMapping("/generateNew")
     public ResponseEntity generateNewPuzzle() {
-        puzzleService.generateNewPuzzle(false);
+        puzzleService.generateNewPuzzle();
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

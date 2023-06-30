@@ -7,6 +7,7 @@ import com.marinara.wordlink.resources.PuzzleGenerator;
 import com.marinara.wordlink.persistence.PuzzleRepository;
 import com.marinara.wordlink.persistence.WordlistRepository;
 import lombok.Getter;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -32,19 +33,28 @@ public class PuzzleService {
         this.puzzleRepository = puzzleRepository;
         this.solveRepository = solveRepository;
 
-        generateNewPuzzle(false);
+        // On launch, check if a puzzle was generated for today. If not, make one
+        Puzzle today = puzzleRepository.getPuzzleOnDay(LocalDate.now());
+        if (today == null)
+            generateNewPuzzle();
+        else
+            currentPuzzle = today;
+
+        // Get yesterdays puzzle
+        previousPuzzle = puzzleRepository.getPuzzleOnDay(LocalDate.now().minusDays(1));
     }
 
     /**
      * Generates a new puzzle, sets the current puzzle to that puzzle
      * This code is going to be bad, will need some optimizing
      */
-    public void generateNewPuzzle(boolean useFiveLetters) {
+    @Scheduled(cron = "0 0 0 * * ?")
+    public void generateNewPuzzle() {
         this.previousPuzzle = currentPuzzle;
 
         // Keep generating puzzles until we find one with a good solution
         while (true) {
-            int wordLength = useFiveLetters ? 5 : 4;
+            int wordLength = 4;
 
             String startingWord = wordlistRepository.getRandomWord(wordLength);
             String targetWord = wordlistRepository.getRandomWord(wordLength);

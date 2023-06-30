@@ -7,6 +7,8 @@ import org.jooq.DSLContext;
 import org.jooq.Result;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.Optional;
 
 import static com.marinara.wordlink.generated.tables.Puzzle.PUZZLE;
@@ -25,6 +27,21 @@ public class PuzzleRepository {
                 .findFirst();
 
         return null;
+    }
+
+    public Puzzle getPuzzleOnDay(LocalDate date) {
+        Optional<PuzzleRecord> record = dsl.selectFrom(PUZZLE)
+                .where(PUZZLE.DATE.eq(date))
+                .fetchInto(PuzzleRecord.class)
+                .stream()
+                .findFirst();
+
+        return record.map(puzzleRecord -> Puzzle.builder()
+                .date(puzzleRecord.getDate())
+                .start(puzzleRecord.getStart())
+                .target(puzzleRecord.getTarget())
+                .solution(puzzleRecord.getSolution())
+                .build()).orElse(null);
     }
 
     public void storePuzzle(Puzzle puzzle) {
