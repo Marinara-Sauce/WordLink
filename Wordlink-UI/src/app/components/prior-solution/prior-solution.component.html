@@ -1,9 +1,29 @@
-<button (click)="viewPreviousSolution()">View Previous Solution</button>
-<app-modal *ngIf="modalOpen" [closeFunction]="onCloseModal">
-    <h1>Yesterdays Puzzle</h1>
-    <h3>The Solution to Yesterdays Puzzle:</h3>
+<div class="heading">
+    <p>Here are the statistics for yesterday's puzzle.</p>
+</div>
+<div class="stats">
+  <div class="stats-row">
+    <div class="stat">
+      <h1>{{priorSolution.numSolves}}</h1>
+      <h3>Solves</h3>
+    </div>
+    <div class="stat">
+      <h1>6</h1>
+      <h3>Your Steps</h3>
+    </div>
+    <div class="stat">
+      <h1>{{priorSolution.bestSolve}}</h1>
+      <h3>Best Steps</h3>
+    </div>
+    <div class="stat">
+      <h1>{{priorSolution.avgSteps}}</h1>
+      <h3>Avg Steps</h3>
+    </div>
+  </div>
+</div>
+<p>The Best Possible Solution Was</p>
+<ul>
     <li *ngFor="let word of priorSolution.solution">
         {{word}}
     </li>
-    <h3>The best solve that day used <span>{{priorSolution.bestSolve}}</span> steps</h3>
-</app-modal>
+</ul>

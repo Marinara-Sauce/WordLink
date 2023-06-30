@@ -9,6 +9,7 @@ export class AppComponent {
   title = 'WordLink';
 
   helpVisible: boolean = false;
+  previousVisible: boolean = false;
 
   showHelp(): void {
     this.helpVisible = true;
@@ -16,5 +17,13 @@ export class AppComponent {
 
   hideHelp = (): void => {
     this.helpVisible = false;
+  }
+
+  showPrevious(): void {
+    this.previousVisible = true;
+  }
+
+  hidePrevious = (): void => {
+    this.previousVisible = false;
   }
 }

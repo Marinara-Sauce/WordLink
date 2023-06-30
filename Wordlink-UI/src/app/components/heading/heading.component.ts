@@ -10,9 +10,8 @@ export class HeadingComponent implements OnInit {
 
   constructor(private puzzleService: PuzzleServiceService) { }
 
-  helpVisible: boolean = false;
-
   @Output() showHelpEmitter = new EventEmitter<string>();
+  @Output() showPreviousEmitter = new EventEmitter<string>();
 
   ngOnInit(): void {
   }
@@ -26,7 +25,7 @@ export class HeadingComponent implements OnInit {
     this.showHelpEmitter.emit();
   }
 
-  hideHelp = (): void => {
-    this.helpVisible = false;
+  showPrevious = (): void => {
+    this.showPreviousEmitter.emit();
   }
 }

@@ -1,7 +1,7 @@
 <title>WordLink</title>
 <body>
   <div class="header">
-    <app-heading (showHelpEmitter)="showHelp()"></app-heading>
+    <app-heading (showHelpEmitter)="showHelp()" (showPreviousEmitter)="showPrevious()"></app-heading>
   </div>
   <div class="puzzle">
     <app-puzzle></app-puzzle>
@@ -40,4 +40,8 @@
       <p>After the next puzzle is released, come back to view the solution for the previous puzzle as well as statistics on how everyone else did.</p>
       <p>Good luck, and thanks for playing!</p>
   </div>
+</app-modal>
+
+<app-modal *ngIf="previousVisible" heading="Yesterday's Stats" [closeFunction]="hidePrevious">
+  <app-prior-solution></app-prior-solution>
 </app-modal>

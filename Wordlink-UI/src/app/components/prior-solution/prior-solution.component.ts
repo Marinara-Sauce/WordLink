@@ -18,7 +18,9 @@ export class PriorSolutionComponent implements OnInit {
 
   priorSolution: PriorPuzzleInfo = {
     solution: [],
-    bestSolve: 0
+    bestSolve: 0,
+    avgSteps: 0,
+    numSolves: 0
   };
 
   viewPreviousSolution(): void {

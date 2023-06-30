@@ -8,6 +8,7 @@
     overflow: hidden; /* Enable scroll if needed */
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    transition: opacity 0.3s ease, visibility 0.3s ease;
     display: flex;
 }
 
@@ -30,14 +31,15 @@
     margin: 5%;
     padding: 20px;
     padding-top: 10px;
+    width: 100%;
     border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
     display: flex;
     flex-direction: column;
-  }
+    animation: slideIn 0.3s ease;
+}
 
 .modal-content {
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 /* The Close Button */
@@ -53,4 +55,13 @@
   color: black;
   text-decoration: none;
   cursor: pointer;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
 }
