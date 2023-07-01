@@ -6,7 +6,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'WordLink';
+  title = 'WordStep';
 
   helpVisible: boolean = false;
   previousVisible: boolean = false;

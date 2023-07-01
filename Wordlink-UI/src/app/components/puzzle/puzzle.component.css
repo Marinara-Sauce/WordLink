@@ -20,6 +20,10 @@
   overflow: auto;
 }
 
+.puzzleContainer h3 {
+  text-align: center;
+}
+
 .enterWord {
   width: 100%;
   box-sizing: border-box;
