@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +6,24 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'wordlink-ui';
+  title = 'WordStep';
+
+  helpVisible: boolean = false;
+  previousVisible: boolean = false;
+
+  showHelp(): void {
+    this.helpVisible = true;
+  }
+
+  hideHelp = (): void => {
+    this.helpVisible = false;
+  }
+
+  showPrevious(): void {
+    this.previousVisible = true;
+  }
+
+  hidePrevious = (): void => {
+    this.previousVisible = false;
+  }
 }

@@ -9,7 +9,9 @@ import { PriorPuzzleInfo } from '../PriorPuzzleInfo';
 })
 export class PriorSolutionComponent implements OnInit {
 
-  constructor(private puzzleService: PuzzleServiceService) { }
+  constructor(private puzzleService: PuzzleServiceService) { 
+    this.viewPreviousSolution()
+  }
 
   ngOnInit(): void {
   }
@@ -18,13 +20,26 @@ export class PriorSolutionComponent implements OnInit {
 
   priorSolution: PriorPuzzleInfo = {
     solution: [],
-    bestSolve: 0
+    bestSolve: 0,
+    avgSteps: 0,
+    numSolves: 0,
+    numSteps: -1
   };
 
   viewPreviousSolution(): void {
     this.puzzleService.fetchPriorSolution().subscribe(sol => {
-      this.priorSolution = sol;
-      this.openModal()
+      let yesterday = new Date();
+      yesterday.setDate(yesterday.getDate() - 1);
+
+      let yesterdaysStep = window.localStorage.getItem(`${yesterday.getMonth() + 1}-${yesterday.getDate()}-${yesterday.getFullYear()}`);
+      let totalSteps;
+
+      yesterdaysStep ? totalSteps = parseInt(yesterdaysStep) : totalSteps = -1;
+
+      this.priorSolution = {
+        ...sol,
+        numSteps: totalSteps
+      };
     });
   }
 

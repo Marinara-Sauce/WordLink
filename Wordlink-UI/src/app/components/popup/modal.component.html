@@ -1,6 +1,9 @@
 <div class="modal">
     <div class="modal-box">
-        <button class="close" (click)="onClose()">X</button>
+        <div class="header">
+            <h1>{{heading}}</h1>
+            <button class="close" (click)="onClose()">X</button>
+        </div>
         <div class="modal-content">
             <ng-content></ng-content>
         </div>

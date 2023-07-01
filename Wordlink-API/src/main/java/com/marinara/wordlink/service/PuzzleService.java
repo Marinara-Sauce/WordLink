@@ -1,12 +1,15 @@
 package com.marinara.wordlink.service;
 
+import com.marinara.wordlink.model.PriorPuzzle;
 import com.marinara.wordlink.model.Puzzle;
 import com.marinara.wordlink.model.Solve;
 import com.marinara.wordlink.persistence.SolveRepository;
 import com.marinara.wordlink.resources.PuzzleGenerator;
 import com.marinara.wordlink.persistence.PuzzleRepository;
 import com.marinara.wordlink.persistence.WordlistRepository;
+import com.marinara.wordlink.utils.PuzzleUtils;
 import lombok.Getter;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -22,6 +25,7 @@ public class PuzzleService {
 
     Puzzle currentPuzzle;
     Puzzle previousPuzzle;
+    PriorPuzzle priorStats;
 
     WordlistRepository wordlistRepository;
     PuzzleRepository puzzleRepository;
@@ -32,19 +36,27 @@ public class PuzzleService {
         this.puzzleRepository = puzzleRepository;
         this.solveRepository = solveRepository;
 
-        generateNewPuzzle(false);
+        // On launch, check if a puzzle was generated for today. If not, make one
+        Puzzle today = puzzleRepository.getPuzzleOnDay(LocalDate.now());
+        if (today == null)
+            generateNewPuzzle();
+        else
+            currentPuzzle = today;
+
+        fetchPreviousPuzzle();
     }
 
     /**
      * Generates a new puzzle, sets the current puzzle to that puzzle
      * This code is going to be bad, will need some optimizing
      */
-    public void generateNewPuzzle(boolean useFiveLetters) {
+    @Scheduled(cron = "0 0 0 * * ?")
+    public void generateNewPuzzle() {
         this.previousPuzzle = currentPuzzle;
 
         // Keep generating puzzles until we find one with a good solution
         while (true) {
-            int wordLength = useFiveLetters ? 5 : 4;
+            int wordLength = 4;
 
             String startingWord = wordlistRepository.getRandomWord(wordLength);
             String targetWord = wordlistRepository.getRandomWord(wordLength);
@@ -60,6 +72,15 @@ public class PuzzleService {
                 puzzleRepository.storePuzzle(currentPuzzle);
                 return;
             }
+        }
+    }
+
+    @Scheduled(cron = "30 0 0 * * ?")
+    public void fetchPreviousPuzzle() {
+        previousPuzzle = puzzleRepository.getPuzzleOnDay(LocalDate.now().minusDays(1));
+        if (previousPuzzle != null) {
+            priorStats = solveRepository.getStatsForPuzzle(previousPuzzle.getP_id());
+            priorStats.setSolution(PuzzleUtils.recordSolutionToList(previousPuzzle.getSolution()));
         }
     }
 

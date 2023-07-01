@@ -1,9 +1,47 @@
 <title>WordLink</title>
 <body>
   <div class="header">
-    <app-heading></app-heading>
+    <app-heading (showHelpEmitter)="showHelp()" (showPreviousEmitter)="showPrevious()"></app-heading>
   </div>
   <div class="puzzle">
     <app-puzzle></app-puzzle>
   </div>
 </body>
+<app-modal *ngIf="helpVisible" heading="How to Play" [closeFunction]="hideHelp">
+  <div class="intro">
+      <p>The goal of WordStep is to get from the starting word to the target word taking as little number of "steps" as possible.</p>
+  </div>
+  <div class="steps">
+      <h2>Steps</h2>
+      <p>A "step" is when you change a single letter from the previous word, resulting in a new word. This word must still be a valid word in the dictionary.</p>
+      <p>For example, say you need to step from the word fast. Some steps from fast are:</p>
+      <ul>
+          <li>past</li>
+          <li>fact</li>
+          <li>fest</li>
+      </ul>
+      <p>For each puzzle each step proceeds the previous word. Your goal is to get to the target word.</p>
+      <h2>Example Puzzle</h2>
+      <p>For example, say the starting word is harp and the target word is ramp. A solution to this puzzle is as follows:</p>
+      <ul>
+          <li>harp</li>
+          <li>carp</li>
+          <li>camp</li>
+          <li>ramp</li>
+      </ul>
+      <p>This is the best solution to this puzzle, taking 4 steps.</p>
+      <h2>Playing the Game</h2>
+      <p>When you launch the game you'll see the current puzzle, with the starting word at the top and the bottom word at the bottom. Between them is where you'll
+          enter each step. Use the keyboard at the bottom of the screen to type the word, then hit the "enter" button on the left next to the Z key. After entering
+          a valid step (one letter was changed and it's a valid english word), the word will appear in the list. Keep writing steps until you reach the target.
+      </p>
+      <p>If at any time you want to go back to a previous step, simply tap that word and the puzzle will reset back to that state.</p>
+      <p>A new puzzle is created daily at midnight (EST). Note that your solution may not be the best solution. Try to refine it to use the smallest number of steps possible.</p>
+      <p>After the next puzzle is released, come back to view the solution for the previous puzzle as well as statistics on how everyone else did.</p>
+      <p>Good luck, and thanks for playing!</p>
+  </div>
+</app-modal>
+
+<app-modal *ngIf="previousVisible" heading="Yesterday's Stats" [closeFunction]="hidePrevious">
+  <app-prior-solution></app-prior-solution>
+</app-modal>

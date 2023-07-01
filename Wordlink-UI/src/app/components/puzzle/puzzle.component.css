@@ -20,6 +20,10 @@
   overflow: auto;
 }
 
+.puzzleContainer h3 {
+  text-align: center;
+}
+
 .enterWord {
   width: 100%;
   box-sizing: border-box;
@@ -29,10 +33,6 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
-}
-
-h3 {
-  text-align: center;
 }
 
 .wordError {
