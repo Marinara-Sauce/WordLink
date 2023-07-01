@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
 import { PuzzleServiceService } from 'src/app/services/puzzle-service.service';
 
 @Component({
@@ -83,6 +82,12 @@ export class PuzzleComponent implements OnInit {
     this.puzzleService.attemptSolve(this.steps).subscribe(solved => {
       this.steps = this.steps.slice(0, this.steps.length - 1);
       solved ? console.log('You solved the puzzle!') : console.log('Bad solution :(');
+
+      if (solved) {
+        let today = new Date();
+        let formattedDate: string = `${today.getMonth() + 1}-${today.getDate()}-${today.getFullYear()}`;
+        localStorage.setItem(formattedDate, `${this.steps.length}`);
+      }
     });
   }
 
@@ -107,5 +112,6 @@ export class PuzzleComponent implements OnInit {
   resetToWord = (word: string): void => {
     var indexOfWord = this.steps.indexOf(word);
     this.steps = this.steps.slice(0, indexOfWord + 1);
+    this.solved = false;
   }
 }

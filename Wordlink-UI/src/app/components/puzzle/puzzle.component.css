@@ -31,10 +31,6 @@
   flex-direction: column;
 }
 
-h3 {
-  text-align: center;
-}
-
 .wordError {
   color: red;
 }

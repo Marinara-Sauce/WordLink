@@ -1,21 +1,16 @@
 package com.marinara.wordlink.persistence;
 
-import com.marinara.wordlink.generated.tables.records.PuzzleRecord;
 import com.marinara.wordlink.generated.tables.records.SolveRecord;
 import com.marinara.wordlink.model.PriorPuzzle;
 import com.marinara.wordlink.model.Solve;
-import com.marinara.wordlink.utils.PuzzleUtils;
 import lombok.AllArgsConstructor;
 import org.jooq.DSLContext;
 import org.jooq.Result;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static com.marinara.wordlink.generated.tables.Puzzle.PUZZLE;
 import static com.marinara.wordlink.generated.tables.Solve.SOLVE;
 
 @Repository

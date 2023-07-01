@@ -22,12 +22,24 @@ export class PriorSolutionComponent implements OnInit {
     solution: [],
     bestSolve: 0,
     avgSteps: 0,
-    numSolves: 0
+    numSolves: 0,
+    numSteps: -1
   };
 
   viewPreviousSolution(): void {
     this.puzzleService.fetchPriorSolution().subscribe(sol => {
-      this.priorSolution = sol;
+      let yesterday = new Date();
+      yesterday.setDate(yesterday.getDate() - 1);
+
+      let yesterdaysStep = window.localStorage.getItem(`${yesterday.getMonth() + 1}-${yesterday.getDate()}-${yesterday.getFullYear()}`);
+      let totalSteps;
+
+      yesterdaysStep ? totalSteps = parseInt(yesterdaysStep) : totalSteps = -1;
+
+      this.priorSolution = {
+        ...sol,
+        numSteps: totalSteps
+      };
     });
   }
 

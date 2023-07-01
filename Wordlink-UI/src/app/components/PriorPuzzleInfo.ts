@@ -3,4 +3,5 @@ export interface PriorPuzzleInfo {
     bestSolve: number;
     numSolves: number;
     avgSteps: number;
+    numSteps: number;
 }

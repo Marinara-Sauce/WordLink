@@ -7,8 +7,8 @@
       <h1>{{priorSolution.numSolves}}</h1>
       <h3>Solves</h3>
     </div>
-    <div class="stat">
-      <h1>6</h1>
+    <div class="stat" *ngIf="priorSolution.numSteps != -1">
+      <h1>{{priorSolution.numSteps}}</h1>
       <h3>Your Steps</h3>
     </div>
     <div class="stat">

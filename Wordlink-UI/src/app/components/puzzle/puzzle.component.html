@@ -15,16 +15,11 @@
         <app-keyboard (keyPress)="onKeyEntered($event)" (backspace)="onBackspace()" (enter)="onSubmitWord()"></app-keyboard>
     </div>
 </div>
-<app-modal *ngIf="solvedModalOpen" [closeFunction]="closeSolvedModal">
+<app-modal *ngIf="solvedModalOpen" [closeFunction]="closeSolvedModal" heading="Puzzle Solved">
     <div>
-        <h1>You Solved the Puzzle</h1>
-        <h3>Now try to find a better solution</h3>
         <div class="scores">
             <h2>You solved it in <span>{{steps.length + 1}}</span> steps</h2>
-            <h2 *ngIf="steps.length + 1 <= bestSolve">You solved the puzzle in the lowest number of steps today!</h2>
-            <h2 *ngIf="steps.length + 1 > bestSolve">Todays best score is <span>{{bestSolve}}</span> steps</h2>
-    
-            <h4>Check back tomorrow for the best solution</h4>
+            <h4>Now try to find a better solution with less steps. Check back tomorrow for the best solution</h4>
         </div>
     </div>
 </app-modal>
