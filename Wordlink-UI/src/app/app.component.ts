@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -10,6 +10,13 @@ export class AppComponent {
 
   helpVisible: boolean = false;
   previousVisible: boolean = false;
+
+  ngOnInit(): void {
+    if (!window.localStorage.getItem("first")) {
+      this.showHelp();
+      window.localStorage.setItem("first", "false");
+    }
+  }
 
   showHelp(): void {
     this.helpVisible = true;
